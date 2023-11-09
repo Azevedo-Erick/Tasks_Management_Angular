@@ -1,0 +1,10 @@
+<div class="toast toast-top toast-end">
+  <div
+    *ngFor="let element of data | async"
+    class="p-4  bg-red-500 rounded-lg text-white text-center duration-300 transition-all ease-linear toast-{{
+      element.toastType
+    }}"
+  >
+    <span>{{ element.message }}</span>
+  </div>
+</div>

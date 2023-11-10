@@ -1,1 +1,28 @@
-<p>admin-layout works!</p>
+<div class="flex flex-row w-full">
+  <div
+    class="w-2/12 sidebar fixed h-screen background border-r flex flex-col border-solid border-r-slate-950"
+  >
+    <div class="w-16 h-16 bg-black ml-4 mt-4"></div>
+    <div class="my-auto flex flex-col w-full p-4 mb-auto self-center">
+      <a
+        class="btn btn-primary w-full mb-4"
+        *ngFor="let route of routes"
+        href="{{ route.route }}"
+        >{{ route.name }}</a
+      >
+    </div>
+    <div class="mt-auto self-center w-full p-4">
+      <button class="btn w-full">
+        <img src="/assets/images/svgs/logout_icon.svg" />
+        Sair
+      </button>
+    </div>
+  </div>
+
+  <div class="w-10/12 ml-auto flex flex-col w-full">
+    <div class="p-4 background text-white shadow-lg text-xl">
+      Sistema de Gerenciador de Projetos
+    </div>
+    <router-outlet />
+  </div>
+</div>

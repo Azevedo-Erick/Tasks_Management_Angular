@@ -1,104 +1,85 @@
-<div class="w-full h-12 mb-4 bg-sky-800 p-4 flex items-center">
-  <mat-icon
-    fontIcon="menu"
-    class="text-white mr-auto cursor-pointer"
-    (click)="editar(0)"
-  />
-  <mat-icon
-    fontIcon="add"
-    class="text-white ml-auto cursor-pointer"
-    (click)="editar(0)"
-  />
-</div>
+<div class="w-full min-h-scren flex flex-col">
+  <div class="btn btn-primary ml-auto cursor-pointer m-4" (click)="editar()">
+    +
+  </div>
 
-<p class="text-center my-16 text-2xl text-slate-700">Tarefas cadastradas</p>
+  <p class="text-center my-16 text-2xl text-slate-700">Tarefas cadastradas</p>
 
-<div
-  class="border bg-slate-400 w-5/12 flex flex-row items-center justify-between rounded-xl shadow mx-auto"
->
   <div
-    class="w-1/4 min-h-full text-center text-white p-4 text-2xl justify-center flex items-center bg-sky-700 rounded-lg"
+    class="flex flex-row flex-wrap gap-4 p-4 m-4 overflow-x-scroll rounded-lg bg-slate-200 min-h-screen shadow-xl border border-slate-600"
   >
-    A fazer (4)
-  </div>
-  <div
-    class="w-1/4 min-h-full text-center text-white p-4 text-2xl justify-center flex items-center bg-slate-800 rounded-lg"
-  >
-    Fazendo (2)
-  </div>
-  <div
-    class="w-1/4 min-h-full text-center text-white p-4 text-2xl justify-center flex items-center bg-slate-800 rounded-lg"
-  >
-    Concluídas (7)
-  </div>
-</div>
-<div
-  class="flex flex-row flex-wrap gap-4 p-4 m-4 rounded-lg bg-slate-200 min-h-screen shadow-xl border border-slate-600"
->
-  <div *ngFor="let item of tasks$ | async">
     <div
-      class="w-96 text-dark-blue bg-white border border-slate-400 border-lg text-base rounded-lg m-8"
+      *ngFor="let group of tasks$ | async"
+      class="p-4 shadow rounded-lg bg-slate-100 flex flex-col"
     >
-      <div class="p-4">
-        <p class="font-bold text-xl">{{ item.name }}</p>
-        <p class="mt-2 mb-4 text-start">
-          {{ item.description }}
-        </p>
-      </div>
-
-      <hr />
-      <div class="p-4">
-        <span class="flex flex-row justify-between">
-          <p class="uppercase">
-            <span class="text-gray-600">{{ item.name }}</span>
-            <span class="font-bold ml-2">Progresso</span>
-          </p>
-          <span class="font-bold">75%</span>
-        </span>
+      <p class="text-center text-xl">{{ group.groupName }}</p>
+      <div *ngFor="let item of group.tasks">
         <div
-          class="w-full h-4 rounded-full border border-slate-200 gradiente"
-        ></div>
-      </div>
+          class="w-96 text-dark-blue bg-white border border-slate-400 border-lg text-base rounded-lg m-8"
+        >
+          <div class="p-4">
+            <p class="font-bold text-xl">{{ item.name }}</p>
+            <p class="mt-2 mb-4 text-start">
+              {{ item.description }}
+            </p>
+          </div>
 
-      <hr *ngIf="item.subTasks.length != 0" />
-      <div
-        *ngIf="item.subTasks.length != 0"
-        class="p-4 flex flex-row w-full items-center"
-      >
-        <span class="flex flex-row items-center">
+          <hr />
+          <div class="p-4">
+            <span class="flex flex-row justify-between">
+              <p class="uppercase">
+                <span class="font-bold ml-2">Progresso</span>
+              </p>
+              <span class="font-bold">75%</span>
+            </span>
+            <div
+              class="w-full h-4 rounded-full border border-slate-200 gradiente"
+            ></div>
+          </div>
+
+          <hr *ngIf="item.subTasks.length != 0" />
           <div
-            class="rounded-full w-4 h-4 bg-emerald-600 border border-slate-200 mr-2"
-            *ngFor="let item of [1, 2, 3, 4]"
-          ></div>
-        </span>
+            *ngIf="item.subTasks.length != 0"
+            class="p-4 flex flex-row w-full items-center"
+          >
+            <span class="flex flex-row items-center">
+              <div
+                class="rounded-full w-4 h-4 bg-emerald-600 border border-slate-200 mr-2"
+                *ngFor="let item of [1, 2, 3, 4]"
+              ></div>
+            </span>
 
-        <span class="ml-2 mr-auto">Sub-Tasks {{ item.subTasks.length }}</span>
-        <mat-icon
-          fontIcon="expand_more"
-          class="icon-expand_more text-emerald-500 ml-auto"
-        />
-      </div>
+            <span class="ml-2 mr-auto"
+              >Sub-Tasks {{ item.subTasks.length }}</span
+            >
+            <mat-icon
+              fontIcon="expand_more"
+              class="icon-expand_more text-emerald-500 ml-auto"
+            />
+          </div>
 
-      <hr />
-      <div class="flex flex-row w-full h-fit p-4">
-        <div
-          class="rounded-full border w-8 h-8 flex flex-center justify-center items-center"
-          (click)="delete(item.id!)"
-        >
-          <mat-icon fontIcon="cancel" class="text-red-500" />
-        </div>
-        <div
-          class="rounded-full border w-8 h-8 flex flex-center justify-center items-center"
-          (click)="editar(item.id!)"
-        >
-          <mat-icon fontIcon="edit" class="text-emerald-500" />
-        </div>
+          <hr />
+          <div class="flex flex-row w-full h-fit p-4">
+            <div
+              class="rounded-full border w-8 h-8 flex flex-center justify-center items-center"
+              (click)="delete(item.id!)"
+            >
+              <mat-icon fontIcon="cancel" class="text-red-500" />
+            </div>
+            <div
+              class="rounded-full border w-8 h-8 flex flex-center justify-center items-center"
+              (click)="editar(item.id!)"
+            >
+              <mat-icon fontIcon="edit" class="text-emerald-500" />
+            </div>
 
-        <div
-          class="rounded-full ml-auto border w-8 h-8 flex justify-center flex-center items-center"
-          (click)="editar(item.id!)"
-        >
-          <mat-icon fontIcon="done" class="text-emerald-500" />
+            <div
+              class="rounded-full ml-auto border w-8 h-8 flex justify-center flex-center items-center"
+              (click)="editar(item.id!)"
+            >
+              <mat-icon fontIcon="done" class="text-emerald-500" />
+            </div>
+          </div>
         </div>
       </div>
     </div>

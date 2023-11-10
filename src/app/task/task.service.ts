@@ -5,6 +5,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { DefaultResponse } from '../../models/defaultResponse.model';
+import { TaskGrouped } from 'src/models/task-grouped.model';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +18,7 @@ export class TaskService {
 
 
   getAll() {
-    return this.httpClient.get<Task[]>(this.userUrl);
+    return this.httpClient.get<TaskGrouped[]>(`${this.userUrl}?grouped=true`);
   }
 
   getById(id: number) {
